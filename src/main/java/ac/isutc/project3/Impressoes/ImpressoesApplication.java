@@ -1,13 +1,13 @@
-package ad.isutc.project3.impressao;
+package ac.isutc.project3.Impressoes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ImpressaoApplication {
+public class ImpressoesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ImpressaoApplication.class, args);
+		SpringApplication.run(ImpressoesApplication.class, args);
 	}
 
 }

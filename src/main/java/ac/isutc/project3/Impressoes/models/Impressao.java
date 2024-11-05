@@ -1,23 +1,31 @@
 package ac.isutc.project3.Impressoes.models;
 
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.io.File;
+import java.sql.Date;
+
 @Data
-@Table(name = "pessoas")
 @Entity
-public class Pessoa {
-	private String name;
-	
-	
-	private String password;
+public class Impressao {
+	private Date created;
+	private Date complete;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private double credits;
+	private File file;
+	
+	@Enumerated(EnumType.STRING)
+	private Status status;
+	
+	
+
 }

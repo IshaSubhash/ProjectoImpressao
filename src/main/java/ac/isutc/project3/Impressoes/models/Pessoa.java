@@ -29,6 +29,9 @@ public class Pessoa {
 	private String password;
 	
 	@Column
+	private String email;
+	
+	@Column
 	private double credits;
 	
     @OneToMany(cascade = CascadeType.ALL)
@@ -73,6 +76,14 @@ public class Pessoa {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public double getCredits() {

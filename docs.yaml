@@ -1,7 +1,11 @@
-openapi: 3.0.0
+openapi: 3.0.1
 info:
   title: Project3 API
-  version: 1.0.0
+  description: API for managing Pessoas, Impressões, and related resources.
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8080
 
 paths:
   /api/users:
@@ -218,6 +222,10 @@ components:
           type: number
         email:
           type: string
+        impressoes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Impressao'
     AddPrintRequest:
       type: object
       properties:
@@ -235,8 +243,6 @@ components:
           type: number
         fileDownloadUri:
           type: string
-        pessoa:
-          $ref: '#/components/schemas/Pessoa'
     UpdatePrintStatusRequest:
       type: object
       properties:

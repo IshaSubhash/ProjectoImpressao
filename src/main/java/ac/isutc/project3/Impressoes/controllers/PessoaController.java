@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import ac.isutc.project3.Impressoes.configs.FileStorageProperties;
 import ac.isutc.project3.Impressoes.models.Impressao;
+import ac.isutc.project3.Impressoes.models.LoginDTO;
+import ac.isutc.project3.Impressoes.models.LoginResponse;
 import ac.isutc.project3.Impressoes.models.Pessoa;
 import ac.isutc.project3.Impressoes.services.PessoaService;
 
@@ -66,4 +69,11 @@ public class PessoaController {
 		
 		
 	}
+	
+	@PostMapping("/login")
+    public ResponseEntity<?> loginEmployee(@RequestBody LoginDTO loginDTO)
+    {
+        LoginResponse loginResponse = pessoaService.loginEmployee(loginDTO);
+        return ResponseEntity.ok(loginResponse);
+    }
 }

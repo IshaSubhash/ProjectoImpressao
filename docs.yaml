@@ -1,0 +1,265 @@
+openapi: 3.0.0
+info:
+  title: Project3 API
+  version: 1.0.0
+
+paths:
+  /api/users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:    
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pessoa'
+    post:
+      summary: Create a user
+      requestBody:
+        content:
+          application/json:    
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pessoa'
+  /api/users/{userId}:
+    get:
+      summary: Get a user
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pessoa'
+    post:
+      summary: Add credit to a user
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: value
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pessoa'
+  /api/users/{userId}/add-print:
+    post:
+      summary: Add a print for a user
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddPrintRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Impressao'
+  /api/users/login:
+    post:
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDTO'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+  /api/prints:
+    get:
+      summary: Get all prints
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Impressao'
+  /api/prints/{printId}:
+    get:
+      summary: Get a print
+      parameters:
+        - in: path
+          name: printId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Impressao'
+    post:
+      summary: Update the status of a print
+      parameters:
+        - in: path
+          name: printId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdatePrintStatusRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Impressao'
+  /api/files/upload:
+    post:
+      summary: Upload a file
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadFileRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+  /api/files/download/{filename}:
+    get:
+      summary: Download a file
+      parameters:
+        - in: path
+          name: filename
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/octet-stream: {}
+  /api/files/list:
+    get:
+      summary: Get a list of files
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+components:
+  schemas:
+    CreateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        credits:
+          type: number
+        email:
+          type: string
+    Pessoa:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        password:
+          type: string
+        credits:
+          type: number
+        email:
+          type: string
+    AddPrintRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+        credits:
+          type: number
+    Impressao:
+      type: object
+      properties:
+        id:
+          type: integer
+        credits:
+          type: number
+        fileDownloadUri:
+          type: string
+        pessoa:
+          $ref: '#/components/schemas/Pessoa'
+    UpdatePrintStatusRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [NEW, OPEN, IN_PROGRESS, RESOLVED, CLOSED]
+    LoginDTO:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: boolean
+    UploadFileRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary

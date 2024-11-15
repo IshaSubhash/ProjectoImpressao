@@ -1,6 +1,7 @@
 package ac.isutc.project3.Impressoes.models;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,6 +30,9 @@ public class Impressao {
 	private Integer id;
 	private String downloadlink;
 	private float credits;
+	
+	@Column(name="pessoa_id")
+	private Integer pessoaId;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -90,6 +94,14 @@ public class Impressao {
 
 	public void setCredits(float credits) {
 		this.credits = credits;
+	}
+
+	public Integer getPessoaId() {
+		return pessoaId;
+	}
+
+	public void setPessoaId(Integer pessoaId) {
+		this.pessoaId = pessoaId;
 	}
 	
 	

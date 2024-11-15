@@ -43,7 +43,7 @@ public class ImpressoesController {
 		return ResponseEntity.ok(balcaoService.adicionarCredito(userId, value));
 	}
 	
-	@PostMapping("/prints/{printId}")
+	@PostMapping("/prints/{printId}") 
 	public ResponseEntity<Impressao> updateState(@RequestParam Status status, @PathVariable int printId) {
 		return ResponseEntity.ok(balcaoService.actualizarEstadoDaImpressao(printId, status));
 	}

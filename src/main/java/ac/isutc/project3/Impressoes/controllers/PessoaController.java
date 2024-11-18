@@ -71,7 +71,7 @@ public class PessoaController {
 	}
 	
 	@PostMapping("/login")
-    public ResponseEntity<?> loginEmployee(@RequestBody LoginDTO loginDTO)
+    public ResponseEntity<LoginResponse> loginEmployee(@RequestBody LoginDTO loginDTO)
     {
         LoginResponse loginResponse = pessoaService.loginEmployee(loginDTO);
         return ResponseEntity.ok(loginResponse);

@@ -65,24 +65,23 @@ public class PessoaServiceImplementation implements PessoaService {
 
 	@Override
 	public LoginResponse loginEmployee(LoginDTO loginDTO) {
-		String msg = "";
-        Pessoa employee1 = loginRepo.findByEmail(loginDTO.getEmail());
-        if (employee1 != null) {
+        Pessoa pessoa = loginRepo.findByEmail(loginDTO.getEmail());
+        if (pessoa != null) {
             String password = loginDTO.getPassword();
-            String encodedPassword = employee1.getPassword();
+            String encodedPassword = pessoa.getPassword();
             Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
             if (isPwdRight) {
-                Optional<Pessoa> employee = loginRepo.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
-                if (employee.isPresent()) {
-                    return new LoginResponse("Login Success", true);
+                Optional<Pessoa> pessoaCheck = loginRepo.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
+                if (pessoaCheck.isPresent()) {
+                    return new LoginResponse("Login Success", true, pessoa.getId());
                 } else {
-                    return new LoginResponse("Login Failed", false);
+                    return new LoginResponse("Login Failed", false, -1);
                 }
             } else {
-                return new LoginResponse("password Not Match", false);
+                return new LoginResponse("password Not Match", false, -1);
             }
         }else {
-            return new LoginResponse("Email not exits", false);
+            return new LoginResponse("Email not exits", false, -1);
         }	
        }
 
